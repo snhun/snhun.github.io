@@ -1,2 +1,1 @@
-# snhun.github.io
-Note
+就是个说明~
