@@ -118,10 +118,12 @@
     .visual-card::before { content: ""; position: absolute; inset: -22% -50% auto; height: 80%; background: radial-gradient(circle at 50% 50%, var(--art-halo), transparent 60%); opacity: .72; z-index: -1; }
     .visual-card::after { content: ""; position: absolute; inset: 0; opacity: .10; background-image: radial-gradient(var(--accent) .4px, transparent .4px); background-size: 24px 24px; mask-image: linear-gradient(transparent, black 65%); z-index: -1; }
     /* Display the original square JPG unmodified, with padding below for the caption. */
-    .visual-card { background: #fff; }
+    /* The original image is square. Let it determine its own height, and place the caption BELOW it.
+       The former arched radius and absolute positioning clipped the top wing tips and lower brush loop. */
+    .visual-card { display: flex; flex-direction: column; aspect-ratio: auto; border-radius: 28px; background: #fff; }
     .visual-card::before, .visual-card::after { display: none; }
-    .original-fly { position: absolute; top: 3%; left: 2.5%; display: block; width: 95%; height: auto; max-height: 85%; aspect-ratio: 1; object-fit: contain; background: #fff; border: 0; }
-    .visual-bottom { z-index: 1; position: absolute; left: 32px; right: 32px; bottom: 30px; display: flex; justify-content: space-between; align-items: end; gap: 20px; font-size: 10px; font-weight: 700; letter-spacing: .17em; color: var(--text-2); }
+    .original-fly { position: static; display: block; width: 100%; height: auto; max-height: none; aspect-ratio: 1 / 1; object-fit: contain; background: #fff; border: 0; flex: none; }
+    .visual-bottom { z-index: 1; position: static; display: flex; justify-content: space-between; align-items: end; gap: 20px; padding: 12px 32px 28px; border-top: 1px solid rgba(35, 41, 51, .06); font-size: 10px; font-weight: 700; letter-spacing: .17em; color: var(--text-2); }
     .visual-bottom strong { color: var(--accent-dark); font: italic 30px/1 var(--serif); letter-spacing: -.04em; }
     .visual-side { position: absolute; left: -25px; bottom: 70px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 10px; letter-spacing: .2em; font-weight: 700; color: var(--muted); }
     @keyframes float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(1deg); } }
@@ -186,7 +188,7 @@
       .hero-index { margin-top: 48px; }
       .hero-visual { max-width: min(490px, 91%); margin-right: 4%; }
       .visual-side { display: none; }
-      .visual-bottom { z-index: 1; left: 24px; right: 24px; bottom: 24px; }
+      .visual-bottom { padding: 12px 24px 24px; }
       .note-layout { grid-template-columns: 1fr; gap: 44px; }
       .note-privacy { margin-top: 25px; }
       .footer-main { flex-direction: column; gap: 38px; }
@@ -256,7 +258,7 @@
         </div>
         <div class="hero-visual" aria-label="原站 Fly.jpg 手绘飞翔艺术图，保持原始比例完整显示" role="img">
           <div class="visual-card">
-            <!-- The actual original artwork; no SVG recreation and no CSS cropping. -->
+            <!-- Original 800×800 JPG, in normal document flow; caption sits below instead of overlapping artwork. -->
             <img class="original-fly" src="./assets/Fly.jpg" alt="Fly with me — 原站的手绘飞翔艺术图" width="800" height="800" fetchpriority="high" decoding="async" />
             <div class="visual-bottom"><span>THE SHAPE<br />OF A POSSIBILITY</span><strong>Fly.</strong></div>
           </div>
